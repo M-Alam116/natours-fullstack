@@ -16,6 +16,12 @@ router.patch(
   authContoller.updatePassword,
 );
 
+router.get(
+  '/me',
+  authContoller.protect,
+  userContoller.getMe,
+  userContoller.getUser,
+);
 router.patch('/updateMe', authContoller.protect, userContoller.updateMe);
 router.delete('/deleteMe', authContoller.protect, userContoller.deleteMe);
 
