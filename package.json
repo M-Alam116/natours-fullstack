@@ -1,26 +1,32 @@
 {
-  "name": "natours",
+  "name": "natours-project",
   "version": "1.0.0",
-  "description": "learning node, express and mongodb",
+  "description": "For learning Express,Node and Mongodb",
   "main": "app.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
-    "start": "nodemon server.js",
-    "start:prod": "set NODE_ENV=production&& nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "debug": "ndb server.js",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
-  "author": "Muhammad Alam",
+  "author": "Syed Moazam Ali",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
+    "@stripe/stripe-js": "^2.0.0",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-mongo-sanitize": "^2.2.0",
-    "express-rate-limit": "^6.9.0",
+    "express-rate-limit": "^6.8.0",
     "helmet": "^7.0.0",
     "hpp": "^0.2.3",
     "html-to-text": "^9.0.5",
@@ -29,26 +35,17 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.4",
-    "nodeman": "^1.1.2",
+    "nodemailer-smtp-transport": "^2.7.4",
     "pug": "^3.0.2",
-    "sharp": "^0.32.5",
+    "sharp": "^0.32.4",
     "slugify": "^1.6.6",
-    "validator": "^13.11.0",
+    "stripe": "^12.17.0",
+    "validator": "^13.9.0",
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
-    "eslint": "^8.46.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-node": "^4.1.0",
-    "eslint-config-prettier": "^8.10.0",
-    "eslint-plugin-import": "^2.28.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.33.1",
-    "parcel-bundler": "^1.8.1",
-    "prettier": "^3.0.1"
-  },
-  "engines": {
-    "node": ">=10.0.0"
+ 
+    "parcel-bundler": "^1.12.5",
+    "prettier": "^3.0.0"
   }
 }

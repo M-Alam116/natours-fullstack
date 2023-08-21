@@ -1,14 +1,16 @@
-/* eslint-disable */
-
 export const hideAlert = () => {
   const el = document.querySelector('.alert');
+  // console.log('Hide ALert');
+  // if el then remove
   if (el) el.parentElement.removeChild(el);
 };
 
-// type is 'success' or 'error'
-export const showAlert = (type, msg) => {
+// SHOW ALERT
+export const showAlert = (type, message) => {
   hideAlert();
-  const markup = `<div class="alert alert--${type}">${msg}</div>`;
+  const markup = `<div class="alert alert--${type}">${message}</div>`;
+  // console.log('Show ALert');
   document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
+
   window.setTimeout(hideAlert, 5000);
 };

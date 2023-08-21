@@ -1,56 +1,112 @@
-import '@babel/polyfill';
-import { displayMap } from './mapbox';
+/*eslint disable */
+// console.log('Hello from Parcel New');
+
 import { login, logout } from './login';
 import { updateSettings } from './updateSettings';
+import { signup } from './signup';
+import { bookTour } from './booking';
+import { showAlert } from './alerts';
 
-const mapBox = document.getElementById('map');
-const loginForm = document.querySelector('.form--login');
-const logOutBtn = document.querySelector('.nav__el--logout');
-const userDataForm = document.querySelector('.form-user-data');
-const userPasswordForm = document.querySelector('.form-user-password');
+const form = document.querySelector('.form-login');
+const logoutBtn = document.querySelector('.nav__el--logout');
 
-if (mapBox) {
-  const locations = JSON.parse(mapBox.dataset.locations);
-  displayMap(locations);
+if (form)
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const emailLogin = document.getElementById('email').value;
+    const passwordLogin = document.getElementById('password').value;
+    // console.log(email);
+    login(emailLogin, passwordLogin);
+  });
+
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', logout);
 }
 
-if (loginForm)
-  loginForm.addEventListener('submit', (e) => {
+// Updating
+
+const update = document.querySelector('.form-user-data');
+
+if (update) {
+  update.addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    login(email, password);
-  });
-
-if (logOutBtn) logOutBtn.addEventListener('click', logout);
-
-if (userDataForm)
-  userDataForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
     const form = new FormData();
-    form.append('name', document.getElementById('name').value);
-    form.append('email', document.getElementById('email').value);
+
+    // because of also file pic
+    form.append('name', document.querySelector('.updateName').value);
+    form.append('email', document.querySelector('.updateEmail').value);
     form.append('photo', document.getElementById('photo').files[0]);
-    console.log(form);
+    // const name = document.querySelector('.updateName').value;
+    // const email = document.querySelector('.updateEmail').value;
+    // console.log(nameUpdate);
+    // console.log(form);
     updateSettings(form, 'data');
   });
+}
 
-if (userPasswordForm)
-  userPasswordForm.addEventListener('submit', async (e) => {
+// Updating Password
+const updatePasswordForm = document.querySelector('.form-user-password');
+console.log(updatePasswordForm);
+
+if (updatePasswordForm) {
+  updatePasswordForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     document.querySelector('.btn--save-password').textContent = 'Updating...';
 
     const passwordCurrent = document.getElementById('password-current').value;
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('password-confirm').value;
+    // console.log(password);
+    const btn = document.querySelector('.btn--save-password');
+
     await updateSettings(
       { passwordCurrent, password, passwordConfirm },
       'password',
     );
+    document.querySelector('.btn--save-password').textContent = 'Save Password';
 
-    document.querySelector('.btn--save-password').textContent = 'Save password';
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
   });
+}
+
+// Signup
+
+const signupForm = document.querySelector('.form-signup');
+
+if (signupForm) {
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nameSignup = document.getElementById('name-signup').value;
+    const emailSignup = document.getElementById('email-signup').value;
+    const passwordSignup = document.getElementById('password-signup').value;
+    const passwordConfirmSignup = document.getElementById(
+      'password-confirmsignup',
+    ).value;
+    console.log(nameSignup);
+
+    signup(nameSignup, emailSignup, passwordSignup, passwordConfirmSignup);
+  });
+}
+
+// tour bookings
+const bookTourBtn = document.getElementById('bookTour');
+if (bookTourBtn) {
+  bookTourBtn.addEventListener('click', (e) => {
+    console.log('Clicked');
+    e.target.textContent = 'Processing ... ';
+    // in html it is with dash in js it is automatically converted to camel case
+    const tourId = e.target.dataset.tourId;
+
+    bookTour(tourId);
+  });
+}
+
+const alert = document.querySelector('body').dataset.alert;
+if (alert) {
+  // console.log(alert);
+  showAlert('success', alert);
+}

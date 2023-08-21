@@ -1,37 +1,63 @@
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
+// // MONGOOSE
+const mongoose = require('mongoose');
 
-process.on('uncaughtException', err => {
-  console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
-  console.log(err.name, err.message);
+// FOR SYNCHRONOUS EXCEPTION
+// It must be above
+process.on('uncaughtException', (err) => {
+  // console.log(err.name, err.message);
+  console.log(`UNHANDLED EXCEPTION💥 APPLICATION IS CLOSING...`);
+
   process.exit(1);
 });
 
-dotenv.config({ path: './config.env' });
+// EXPRESS App
 const app = require('./app');
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+// express provide  development environment
+// console.log(app.get('env'));
 
+// console.log(process.env);
+// const DB = process.env.DATABASE.replace(
+//   '<PASSWORD>',
+//   process.env.DATABASE_PASSWORD,
+// );
+
+const DB =
+  'mongodb+srv://alam:5ZZiVjX1gTlRuyA9@cluster0.h959ymr.mongodb.net/natours?retryWrites=true&w=majority';
+// UNCAUGHT EXCEPTION SYNCHRONOUS
+// console.log(x);
+
+////// Connection to Database
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
-  .then(() => console.log('DB connection successful!'));
+  .then((con) => {
+    // console.log(con.connections);
+    console.log('Connected to Database Successfully!');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
+// SERVER START
 const server = app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
+  console.log(`Server is running on port ${port}`);
 });
 
-process.on('unhandledRejection', err => {
-  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+// Asynchronous exception outside of express
+// like DB not connected
+
+process.on('unhandledRejection', (err) => {
   console.log(err.name, err.message);
+  console.log(`UNHANDLED REJECTION 💥 SERVER IS CLOSING...`);
+  // first server close then application close
   server.close(() => {
     process.exit(1);
   });
