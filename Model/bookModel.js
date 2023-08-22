@@ -1,38 +1,38 @@
 const mongoose = require('mongoose');
 
-const bookSchema = new mongoose.Schema({
+const bookingSchema = new mongoose.Schema({
   tour: {
     type: mongoose.Schema.ObjectId,
     ref: 'Tour',
+    required: [true, 'Booking must belong to a Tour!']
   },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
+    required: [true, 'Booking must belong to a User!']
   },
   price: {
     type: Number,
-    required: [true, 'A tour must have a price'],
+    require: [true, 'Booking must have a price.']
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now()
   },
   paid: {
-    // if admin wants to get cash then
     type: Boolean,
-    default: true,
-  },
+    default: true
+  }
 });
 
-bookSchema.pre(/^find/, function (next) {
-  //   console.log(this);
+bookingSchema.pre(/^find/, function(next) {
   this.populate('user').populate({
     path: 'tour',
-    select: 'name',
+    select: 'name'
   });
   next();
 });
 
-const Book = mongoose.model('Book', bookSchema);
+const Booking = mongoose.model('Booking', bookingSchema);
 
-module.exports = Book;
+module.exports = Booking;

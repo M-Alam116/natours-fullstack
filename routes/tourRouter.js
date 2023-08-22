@@ -17,7 +17,7 @@ const {
   resizeTourPhoto,
 } = require('../controllers/tourContoller');
 
-const bookingController = require('../controllers/bookingController');
+const bookingController = require('./../controllers/bookingController');
 const authController = require('../controllers/authController');
 const reviewRouter = require('./reviewRouter');
 
@@ -77,10 +77,8 @@ tourRouter
   );
 
 // for Checkout Stripe
-tourRouter.get(
-  '/bookings/checkout-session/:tourId',
-  authController.protect,
-  bookingController.getCheckoutSession,
-);
+tourRouter
+  .route('/bookings/checkout-session/:tourId')
+  .get(authController.protect, bookingController.getCheckoutSession);
 
 module.exports = tourRouter;

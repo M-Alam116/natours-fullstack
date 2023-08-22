@@ -15,7 +15,7 @@ import { showAlert } from './alerts';
 
 //  AS THIS IS NOT WORKING
 const stripe = Stripe(
-  'pk_test_51NhAWASDFEKkRlUUjjyVw7UQBh4ivf49pQlLeTkfuC9BynkG1vqow1D9Uzfw5LMTNsJuogsOMIuM5RwAhr1cAwME00saiyPH3y',
+  'pk_test_51Nhz9zEgdjji6HRiCHYTTfhCD6Eztg9xhEVHGh0DiYkL20tccBft5WrVIo8BSlpsKHbc2uCe3zbEXg0zEXn11hAC00ESU8lJGn',
 );
 
 // 3 steps to checkout

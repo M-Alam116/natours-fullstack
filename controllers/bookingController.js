@@ -15,7 +15,7 @@ exports.getCheckoutSession = CatchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourId);
 
   // Create the session
-  //   console.log(tour);
+    // console.log(tour);
   const session = await stripe.checkout.sessions.create({
     //   so that I can access after checkout
     metadata: {

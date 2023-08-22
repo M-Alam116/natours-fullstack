@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 // FOR SYNCHRONOUS EXCEPTION
 // It must be above
 process.on('uncaughtException', (err) => {
-  // console.log(err.name, err.message);
+  console.log(err.name, err.message);
   console.log(`UNHANDLED EXCEPTION💥 APPLICATION IS CLOSING...`);
 
   process.exit(1);
@@ -45,7 +45,7 @@ mongoose
     console.error('Error connecting to MongoDB:', error);
   });
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 // SERVER START
 const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

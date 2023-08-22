@@ -1,10 +1,10 @@
 const Tour = require('../Model/tourModel');
+const catchAsync = require('../utils/catchAsync');
 const Book = require('../Model/bookModel');
-const CatchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 // get All tours
-exports.getAllTours = CatchAsync(async (req, res) => {
+exports.getAllTours = catchAsync(async (req, res) => {
   // 1) GET THE TOUR DATA FROM COLLECTIOn
   const tours = await Tour.find();
   // automatically detect base
@@ -17,7 +17,7 @@ exports.getAllTours = CatchAsync(async (req, res) => {
   });
 });
 
-exports.getTour = CatchAsync(async (req, res, next) => {
+exports.getTour = catchAsync(async (req, res, next) => {
   // 1) Get the Data
 
   const tour = await Tour.findOne({ slug: req.params.slug }).populate({
@@ -52,21 +52,20 @@ exports.signUp = (req, res) => {
   res.status(200).render('signup');
 };
 
-exports.getMyTours = async (req, res) => {
-  // GEt All Bookings of users
+exports.getMyTours = catchAsync(async (req, res, next) => {
+  // 1) Find all bookings
   const bookings = await Book.find({ user: req.user.id });
-
-  // Get All tours
-  // As in Booking schema I have stored tourId with tour key
-  const tourIds = bookings.map((el) => el.tour);
-
-  const tours = await Tour.find({ _id: { $in: tourIds } });
+  console.log(bookings);
+  // 2) Find tours with the returned IDs
+  const tourIDs = bookings.map((el) => el.tour);
+  const tours = await Tour.find({ _id: { $in: tourIDs } });
 
   res.status(200).render('overview', {
     title: 'My Tours',
     tours,
   });
-};
+});
+
 // When Booking create show alert
 exports.alerts = (req, res, next) => {
   const { alert } = req.query;
