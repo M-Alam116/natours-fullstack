@@ -20,10 +20,8 @@ const Reviews = JSON.parse(
 
 // console.log(process.env.DATABASE);
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD,
-);
+const DB =
+  'mongodb+srv://alam:5ZZiVjX1gTlRuyA9@cluster0.h959ymr.mongodb.net/natours?retryWrites=true&w=majority';
 
 ////// Connection to Database
 mongoose
