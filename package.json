@@ -14,7 +14,7 @@
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
     "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
-  "author": "Syed Moazam Ali",
+  "author": "Muhammad Alam",
   "license": "ISC",
   "dependencies": {
     "@stripe/stripe-js": "^2.0.0",
